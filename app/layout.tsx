@@ -28,7 +28,7 @@ const siteDescription =
 export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ||
-      "https://wedding-invitation-abhiram-athira.vercel.app"
+      "https://wedding-invitation-athira-abhiram-2.vercel.app"
   ),
   title: siteTitle,
   description: siteDescription,

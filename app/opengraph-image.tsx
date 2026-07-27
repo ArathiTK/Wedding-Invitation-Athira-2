@@ -7,13 +7,13 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default async function Image() {
-  const isAthiraFirst = (process.env.NEXT_PUBLIC_SITE_URL || "").includes(
-    "wedding-invitation-athira-abhiram"
+  const isAbhiramFirst = (process.env.NEXT_PUBLIC_SITE_URL || "").includes(
+    "wedding-invitation-abhiram-athira"
   );
 
-  const fileName = isAthiraFirst
-    ? "og-image _Athira2.png"
-    : "og-image_Abhiram.png";
+  const fileName = isAbhiramFirst
+    ? "og-image_Abhiram.png"
+    : "og-image _Athira2.png";
 
   const data = await readFile(
     join(process.cwd(), "public", "assets", fileName),
