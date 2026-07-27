@@ -57,6 +57,7 @@ export default function SaveTheDateSection() {
       <video
         ref={videoRef}
         src="/assets/bg%20video%203%20-%20card.mp4"
+        poster="/assets/poster-card.jpg"
         autoPlay
         loop
         muted

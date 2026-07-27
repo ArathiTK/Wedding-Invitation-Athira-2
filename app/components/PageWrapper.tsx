@@ -30,7 +30,11 @@ export default function PageWrapper({ children }: { children: React.ReactNode })
     frameRef.current = requestAnimationFrame(tick);
   }
 
-  // Step 1 — unlock audio inside the tap gesture (iOS requires this)
+  // IMPORTANT: this fires synchronously inside the "Tap to Open" click/tap handler.
+  // Background audio.play() MUST be called directly inside this user-gesture
+  // callback (not deferred via setTimeout/promise chains) — iOS Safari only
+  // allows unlocking audio playback within the original gesture's call stack.
+  // This is what makes the music start immediately alongside the tap.
   function handleTap() {
     const audio = audioRef.current;
     if (!audio) return;

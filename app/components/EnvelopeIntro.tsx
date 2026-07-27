@@ -63,6 +63,7 @@ export default function EnvelopeIntro({ onOpen, onTap, onVideoEnd }: Props) {
       <video
         ref={videoRef}
         src={VIDEO}
+        poster="/assets/poster-envelope.jpg"
         muted
         playsInline
         preload="auto"

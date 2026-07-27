@@ -58,6 +58,7 @@ export default function VideoBgSection() {
       <video
         ref={videoRef}
         src="/assets/walking%20video%203.mp4"
+        poster="/assets/poster-walking.jpg"
         autoPlay
         loop
         muted
