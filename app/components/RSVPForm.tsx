@@ -12,11 +12,14 @@ export default function RSVPForm() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const { register, handleSubmit, formState: { errors } } = useForm<RSVPData>();
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<RSVPData>();
+  const attendance = watch("attendance");
+  const isDecline = attendance === "decline";
 
   async function onSubmit(data: RSVPData) {
     setSubmitting(true); setError("");
-    try { await submitRSVP(data); setSubmitted(true); }
+    const payload = isDecline ? { ...data, guestCount: 0 } : data;
+    try { await submitRSVP(payload); setSubmitted(true); }
     catch (e) { setError(e instanceof Error ? e.message : "Something went wrong."); }
     finally { setSubmitting(false); }
   }
@@ -68,17 +71,22 @@ export default function RSVPForm() {
               </div>
               <div>
                 <label className={labelClass}>Total Number of Guests *</label>
-                <input type="number" min={1} max={20} placeholder="Including yourself" className={numberInputClass}
-                  {...register("guestCount", { required: "Please enter the number of guests", min: { value: 1, message: "At least 1 guest" }, max: { value: 20, message: "Maximum 20 guests" }, valueAsNumber: true })} />
+                <input type="number" min={isDecline ? 0 : 1} max={20} placeholder="Including yourself" className={numberInputClass}
+                  {...register("guestCount", {
+                    required: isDecline ? false : "Please enter the number of guests",
+                    min: isDecline ? undefined : { value: 1, message: "At least 1 guest" },
+                    max: { value: 20, message: "Maximum 20 guests" },
+                    valueAsNumber: true,
+                  })} />
                 {errors.guestCount && <p className="text-red-400 text-xs mt-1">{errors.guestCount.message}</p>}
               </div>
               <div>
                 <label className={labelClass}>Are You Attending? *</label>
                 <div className="flex flex-col gap-2">
                   {[
-                    { value: "both", label: "Wedding & Reception" },
+                    { value: "both", label: "Wedding & Pre-Wedding Reception" },
                     { value: "ceremony", label: "Wedding Only" },
-                    { value: "reception", label: "Reception Only" },
+                    { value: "reception", label: "Pre-Wedding Reception Only" },
                     { value: "decline", label: "Regretfully Decline" },
                   ].map(({ value, label }) => (
                     <label key={value} className="flex items-center gap-3 text-[#fff9f3] text-sm cursor-pointer">
