@@ -62,14 +62,14 @@ export default function RSVPForm() {
 
         <AnimateOnScroll delay={0.15}>
           <div className="w-full mt-[clamp(2rem,7vh,3rem)]">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-[clamp(1.25rem,4vh,1.75rem)]" noValidate>
-              <div>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <div className="mb-[clamp(1.25rem,4vh,1.75rem)]">
                 <label className={labelClass}>Full Name *</label>
                 <input type="text" placeholder="Your name" className={inputClass}
                   {...register("name", { required: "Name is required" })} />
                 {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name.message}</p>}
               </div>
-              <div>
+              <div className="mb-[clamp(1.25rem,4vh,1.75rem)]">
                 <label className={labelClass}>Total Number of Guests *</label>
                 <input type="number" min={isDecline ? 0 : 1} max={20} placeholder="Including yourself" className={numberInputClass}
                   {...register("guestCount", {
@@ -80,8 +80,8 @@ export default function RSVPForm() {
                   })} />
                 {errors.guestCount && <p className="text-red-400 text-xs mt-1">{errors.guestCount.message}</p>}
               </div>
-              <div>
-                <label className={labelClass}>Are You Attending? *</label>
+              <div className="mb-[clamp(1.75rem,5.5vh,2.5rem)]">
+                <label className="block heading-display text-xs text-[#fff9f3] mb-2">Are You Attending? *</label>
                 <div className="flex flex-col gap-2">
                   {[
                     { value: "both", label: "Wedding & Pre-Wedding Reception" },
@@ -98,7 +98,7 @@ export default function RSVPForm() {
                 </div>
                 {errors.attendance && <p className="text-red-400 text-xs mt-1">{errors.attendance.message}</p>}
               </div>
-              {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+              {error && <p className="text-red-400 text-sm text-center mb-4">{error}</p>}
               <div className="flex justify-center">
                 <button type="submit" disabled={submitting}
                   className="px-8 py-2 text-[#fff9f3] text-sm tracking-wide rounded-full font-semibold shadow-md transition-all duration-300 disabled:opacity-60"
