@@ -5,6 +5,24 @@ import { WEDDING, makeGoogleCalendarUrl } from "@/lib/constants";
 export default function EventsSection() {
   const events = [
     {
+      name: "Pre-Wedding Reception",
+      date: WEDDING.preWeddingReception.date,
+      time: WEDDING.preWeddingReception.time,
+      venue: WEDDING.preWeddingReception.venue,
+      address: WEDDING.preWeddingReception.address,
+      cardBg: "url('/assets/bg.png')",
+      cardBgPosition: "center",
+      googleMapsUrl: WEDDING.preWeddingReception.googleMapsUrl,
+      calUrl: makeGoogleCalendarUrl({
+        title: "Abhiram TK & Athira K — Pre-Wedding Reception",
+        isoDate: WEDDING.preWeddingReception.isoDate,
+        startTime: WEDDING.preWeddingReception.startTime,
+        endTime: WEDDING.preWeddingReception.endTime,
+        venue: WEDDING.preWeddingReception.venue,
+        address: WEDDING.preWeddingReception.address,
+      }),
+    },
+    {
       name: "Wedding Ceremony",
       date: WEDDING.ceremony.date,
       time: WEDDING.ceremony.time,
@@ -22,24 +40,6 @@ export default function EventsSection() {
         address: WEDDING.ceremony.address,
       }),
     },
-    {
-      name: "Reception",
-      date: WEDDING.reception.date,
-      time: WEDDING.reception.time,
-      venue: WEDDING.reception.venue,
-      address: WEDDING.reception.address,
-      cardBg: "url('/assets/bg.png')",
-      cardBgPosition: "center",
-      googleMapsUrl: WEDDING.reception.googleMapsUrl,
-      calUrl: makeGoogleCalendarUrl({
-        title: "Abhiram TK & Athira K — Wedding Reception",
-        isoDate: WEDDING.reception.isoDate,
-        startTime: WEDDING.reception.startTime,
-        endTime: WEDDING.reception.endTime,
-        venue: WEDDING.reception.venue,
-        address: WEDDING.reception.address,
-      }),
-    },
   ];
 
   return (
@@ -54,8 +54,12 @@ export default function EventsSection() {
           {events.map(({ name, date, time, venue, address, cardBg, cardBgPosition, googleMapsUrl }, i) => (
             <AnimateOnScroll key={name} delay={0.1 + i * 0.1}>
               <div className="rounded-lg p-4">
-                <h3 className="heading-gold heading-display text-center mb-[clamp(0.35rem,1.5vh,0.6rem)]"
-                  style={{ fontSize: "clamp(1.1rem, 4.5vw, 1.5rem)", letterSpacing: "0.1em", color: "#fff9f3" }}>
+                <h3 className="heading-gold heading-display text-center mb-[clamp(0.35rem,1.5vh,0.6rem)] whitespace-nowrap w-full"
+                  style={{
+                    fontSize: "clamp(0.7rem, 3.4vw, 1.25rem)",
+                    letterSpacing: "0.1em",
+                    color: "#fff9f3",
+                  }}>
                   {name}
                 </h3>
                 <div className="space-y-[clamp(0.35rem,1.5vh,0.6rem)]">
