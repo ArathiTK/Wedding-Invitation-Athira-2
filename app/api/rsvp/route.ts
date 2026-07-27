@@ -14,10 +14,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: "Server misconfigured: missing sheet URL" }, { status: 500 });
     }
 
+    const attendanceMap: Record<string, string> = {
+      both: "link2-accept",
+      reception: "link2-pre-wedding-only",
+      ceremony: "link2-wedding-only",
+      decline: "link2-decline",
+    };
+
     const payload = {
       name,
       guests: guests ?? guestCount,
-      attendance: attendance === "decline" ? "link2-decline" : "link2-accept",
+      attendance: attendanceMap[attendance] ?? "link2-decline",
       targetTab: "ATHIRA",
       timestamp: new Date().toISOString(),
     };
