@@ -79,6 +79,20 @@ export default function VideoBgSection() {
           Two separate paths, moving at their own pace, quietly led us to each other. Through a million tiny moments of laughter, comfort, and shared dreams, our individual journeys seamlessly became one beautiful love story.
         </p>
       </div>
+
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="#000000"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="animate-bounce absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+      >
+        <path d="M6 9l6 6 6-6" />
+      </svg>
     </section>
   );
 }
