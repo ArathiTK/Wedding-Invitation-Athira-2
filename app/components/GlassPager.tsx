@@ -44,6 +44,10 @@ export default function GlassPager({ pages }: { pages: React.ReactNode[] }) {
   const lockedRef = useRef(false);
   const idleTimerRef = useRef<number | undefined>(undefined);
   const touchYRef = useRef<number | null>(null);
+  // Starts null so server and client render identically on hydration; JS then
+  // measures the real pixel size in the effect below and swaps it in — the
+  // CSS-viewport fallback below means that swap never has to happen from a
+  // blank/null render.
   const [size, setSize] = useState<{ width: number; height: number } | null>(null);
 
   useEffect(() => {
@@ -123,15 +127,18 @@ export default function GlassPager({ pages }: { pages: React.ReactNode[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!size) return null;
-
+  // Fall back to CSS viewport units until JS has measured the real pixel size
+  // (e.g. during SSR/first paint), so the pager always paints something on
+  // first frame instead of returning null and flashing blank.
+  const width = size?.width ?? "100%";
+  const height = size?.height ?? "100dvh";
   const bgTrackIndex = Math.min(index, INVITATION_INDEX);
-  const bgTop = (INVITATION_INDEX - bgTrackIndex) * size.height;
+  const bgTop = size ? (INVITATION_INDEX - bgTrackIndex) * size.height : 0;
 
   return (
     <div
       className="fixed overflow-hidden"
-      style={{ top: 0, left: "50%", transform: "translateX(-50%)", width: size.width, height: size.height, zIndex: 0 }}
+      style={{ top: 0, left: "50%", transform: "translateX(-50%)", width, height, zIndex: 0 }}
     >
       <motion.div
         aria-hidden
@@ -141,8 +148,8 @@ export default function GlassPager({ pages }: { pages: React.ReactNode[] }) {
           position: "fixed",
           left: "50%",
           transform: "translateX(-50%)",
-          width: size.width,
-          height: size.height,
+          width,
+          height,
           backgroundImage: "url('/assets/BG%20jasmine.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",

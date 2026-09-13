@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { after } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,15 +30,20 @@ export async function POST(req: NextRequest) {
       timestamp: new Date().toISOString(),
     };
 
-    const res = await fetch(sheetUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
+    after(async () => {
+      try {
+        const res = await fetch(sheetUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) {
+          console.error("Failed to submit RSVP to Google Sheet:", res.status);
+        }
+      } catch (err) {
+        console.error("Error submitting RSVP to Google Sheet:", err);
+      }
     });
-
-    if (!res.ok) {
-      return NextResponse.json({ message: "Failed to submit RSVP" }, { status: 502 });
-    }
 
     return NextResponse.json({ success: true, message: "RSVP received! Thank you." });
   } catch {

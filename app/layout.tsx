@@ -47,6 +47,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${cormorant.variable} h-full`}>
+      <head>
+        <link rel="preload" as="image" href="/assets/poster-envelope.jpg" fetchPriority="high" />
+      </head>
       <body className="min-h-full antialiased" style={{ backgroundColor: "#1f2519" }}>
         {/* Mobile-width container — centred on desktop, full-width on mobile */}
         <div
